@@ -388,7 +388,7 @@ sub dmap_pack {
         }
         # or, it may be we don't know what kind of thing this is
         unless ($by_name{ $name }) {
-            #carp "we don't know the type for '$name' elements - skipping";
+            #carp "$name - unknown type";
             next;
         }
 
