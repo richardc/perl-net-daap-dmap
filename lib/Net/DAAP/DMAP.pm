@@ -1,7 +1,7 @@
 package Net::DAAP::DMAP;
 use strict;
 our $NOISY = 0;
-our $VERSION = '1.24';
+our $VERSION = '1.25';
 
 =pod
 
@@ -194,9 +194,13 @@ sub init {
                        3 => 'n',
                        5 => 'N',
                        7 => 'Q',
-                       9 => 'a*',
+                       9 => 'a*',  # utf-8 encoded
                        10 => 'N',
                        11 => 'nn',
+                       42 => 'a*', # this is a local invention - 9 is
+                                   # getting handled as utf-8, but for
+                                   # dpap.picturedata that would be
+                                   # bad m'kay
                        );
 }
 
@@ -370,7 +374,8 @@ sub update_content_codes {
       if ($f->[0] eq 'dmap.contentcodesname') { $name = $f->[1] }
       if ($f->[0] eq 'dmap.contentcodestype') { $type = $f->[1] }
     }
-    if ($id eq 'mcnm') { $type = 9 } # string names please
+    if ($id eq 'mcnm') { $type = 9  } # string names please
+    if ($id eq 'pfdt') { $type = 42 } # and straight binary pictures
     my $record = { NAME => $name, ID => $id, TYPE => $type };
     $short->{$id} = $record;
   }
@@ -852,7 +857,7 @@ __DATA__
           'pfdt' => {
                       'ID' => 'pfdt',
                       'NAME' => 'dpap.picturedata',
-                      'TYPE' => 9
+                      'TYPE' => 42
                     },
           'picd' => {
                       'ID' => 'picd',
