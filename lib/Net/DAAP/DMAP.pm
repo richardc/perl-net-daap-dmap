@@ -1,5 +1,6 @@
 package Net::DAAP::DMAP;
 use strict;
+our $VERSION = '0.01';
 
 =pod
 

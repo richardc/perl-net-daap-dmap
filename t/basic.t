@@ -3,7 +3,7 @@ use strict;
 use warnings;
 my @dmap_files;
 BEGIN { @dmap_files = <t/*.dmap> }
-use Test::More tests => @dmap_files;
+use Test::More tests => scalar @dmap_files;
 use Net::DAAP::DMAP qw( dmap_unpack dmap_pack );
 
 sub is_binary ($$;$) {
@@ -18,7 +18,6 @@ if (eval "use Data::HexDump; use Test::Differences; 1") {
         eq_or_diff( HexDump( $value ), HexDump( $expected ), $reason );
     };
 }
-
 
 for my $file (@dmap_files) {
     local $TODO = "Fix Net::DAAP::DMAP to understand the new content codes"
