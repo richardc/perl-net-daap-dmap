@@ -18,7 +18,8 @@ Net::DAAP::DMAP - Perl module for reading and writing DAAP structures
   $array_ref = dmap_unpack($dmap);           # knows about data types
   $node      = dmap_seek($array_ref, $path);
 
-  $flattened = dmap_flatten($array_ref);     # convert to path = data format
+  $flattened = dmap_flatten($array_ref);     # convert to path = data formta
+  $flat_list = dmap_flat_list($array_ref);   # convert to [ path, data ] format
   $xml       = dmap_to_xml($dmap);           # convert to XML fragment
   $dmap      = dmap_pack($dmap);             # convert to DMAP packet
   update_content_codes($unpacked_content_codes_response);
@@ -122,6 +123,18 @@ a slash-separated path.  For example:
 You can use C<grep> and regexps to find data if that's the way your
 mind works.
 
+C<dmap_flatten> has a similar looking cousin called C<dmap_flat_list>,
+which returns an array of "I<path> => I<value>" pairs.  For example:
+
+
+  [
+    '/dmap.loginresponse/dmap.status' => 200,
+    '/dmap.loginresponse/dmap.sessionid' => 2393,
+  ]
+
+You can then turn this into a hash (which may of course lose you the
+first elements), or iterate over it in pairs, if that's easier.
+
 You can, but don't have to, update the tables of field names ("content
 codes") and data types.  DAAP offers a request that returns a packet
 of content codes.  Feed that packet to C<update_content_codes>.
@@ -160,7 +173,7 @@ use Carp;
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(dmap_to_hash_ref dmap_to_array_ref update_content_codes
-                    dmap_unpack dmap_to_xml dmap_seek dmap_flatten dmap_pack );
+                    dmap_unpack dmap_to_xml dmap_seek dmap_flatten dmap_flat_list dmap_pack );
 our %EXPORT_TAGS = ( 'all' => \@EXPORT_OK );
 
 our $Types;
@@ -229,6 +242,26 @@ sub flatten_traverse {
     }
 }
 
+sub dmap_flat_list {
+    return @{ flat_list_traverse([], "", shift) };
+}
+
+sub flat_list_traverse {
+    my ($list, $prefix, $struct) = @_;
+    foreach my $ref (@$struct) {
+        for (my $i=0; $i < @$ref; $i+=2) {
+            my ($tag, $data) = ($ref->[$i], $ref->[$i+1]);
+
+            if (ref $data eq 'ARRAY') {
+                flat_list_traverse($list, "$prefix/$tag", $data);
+            } else {
+                push @$list, "$prefix/$tag", $data;
+            }
+        }
+    }
+    return $list;
+}
+
 
 sub dmap_unpack {
     my $buf = shift;
@@ -238,7 +271,9 @@ sub dmap_unpack {
         my ($tag, $len) = unpack("a4N", $buf);
         my $data = substr($buf, 8, $len);
         my $type = $Types->{$tag}{TYPE};
-        die "Don't know about the type of $tag" unless $type;
+        unless ($type) {
+            warn "Don't know about the type of $tag";
+        }
 
         if ($type == 12) {
             $data = dmap_unpack($data);
