@@ -3,12 +3,8 @@ use strict;
 use warnings;
 my @dmap_files;
 BEGIN { @dmap_files = <t/*.dmap> }
-use Test::More tests => 2 + @dmap_files;
-use Net::DAAP::DMAP qw( dmap_unpack );
-BEGIN { use_ok( "Net::DAAP::DMAP::Pack", 'dmap_pack' ) }
-
-is( $Net::DAAP::DMAP::Pack::types{mper}{NAME}, 'dmap.persistentid',
-    "extracted the DAAP dictionary from Net::DAAP::DMAP" );
+use Test::More tests => @dmap_files;
+use Net::DAAP::DMAP qw( dmap_unpack dmap_pack );
 
 sub is_binary ($$;$) {
     $_[0] =~ s{([^[:print:]])}{sprintf "<%02x>", ord $1}ge;

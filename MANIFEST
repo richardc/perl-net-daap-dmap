@@ -1,7 +1,7 @@
 Makefile.PL
 Build.PL
 META.yml
-lib/Net/DAAP/DMAP/Pack.pm
+lib/Net/DAAP/DMAP.pm
 MANIFEST
 MANIFEST.SKIP
 t/basic.t
