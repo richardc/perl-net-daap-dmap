@@ -1,10 +1,12 @@
+1.23	Friday 30th July, 2004
+	Decodes text as utf-8 when Encode is available.
+
 1.22	Wendesday 28th July, 2004
 	fixed a bug in update_content_codes that was causing subsequent
 	calls to mess up spectacularly
 	Introduced $Net::DAAP::DMAP::NOISY to optionally turn on the
 	warnings added in 1.20 (defaults to off)
 	
-
 1.21	Monday 26th July, 2004
 	Added dmap_flat_list, needed for Net::DAAP::Client 0.4
 
