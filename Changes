@@ -1,3 +1,6 @@
+1.21	Monday 26th July, 2004
+	Added dmap_flat_list, needed for Net::DAAP::Client 0.4
+
 1.20	Monday 12th July, 2004
 	Split from the dapple dist
 	Pod fixes
