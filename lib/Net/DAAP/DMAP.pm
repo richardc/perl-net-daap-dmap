@@ -1,6 +1,7 @@
 package Net::DAAP::DMAP;
 use strict;
-our $VERSION = '1.21';
+our $NOISY = 0;
+our $VERSION = '1.22';
 
 =pod
 
@@ -269,9 +270,11 @@ sub dmap_unpack {
     while (length $buf) {
         my ($tag, $len) = unpack("a4N", $buf);
         my $data = substr($buf, 8, $len);
+        substr($buf, 0, 8+$len) = '';
         my $type = $Types->{$tag}{TYPE};
         unless ($type) {
-            #warn "Don't know about the type of $tag";
+            carp "'$tag' unknown, can't unpack" if $NOISY;
+            next;
         }
 
         if ($type == 12) {
@@ -285,7 +288,6 @@ sub dmap_unpack {
             $data = unpack($Type_To_Unpack{$type}, $data);
         }
         push @tags, [ $Types->{$tag}{NAME}, $data ];
-        substr($buf, 0, 8+$len) = '';
     }
 
     return \@tags;
@@ -364,7 +366,7 @@ sub update_content_codes {
       if ($f->[0] eq 'dmap.contentcodesname') { $name = $f->[1] }
       if ($f->[0] eq 'dmap.contentcodestype') { $type = $f->[1] }
     }
-    if ($name eq 'mcnm') { $type = 9 } # string names please
+    if ($id eq 'mcnm') { $type = 9 } # string names please
     my $record = { NAME => $name, ID => $id, TYPE => $type };
     $short->{$id} = $record;
   }
@@ -383,12 +385,12 @@ sub dmap_pack {
         # something it doesn't know the content-code of, like aeSV
         # which is new to 4.5
         unless ($name) {
-            #carp "element without a name - skipping";
+            carp "element without a name - skipping" if $NOISY;
             next;
         }
         # or, it may be we don't know what kind of thing this is
         unless ($by_name{ $name }) {
-            #carp "$name - unknown type";
+            carp "$name has unknown type - skipping" if $NOISY;
             next;
         }
 
