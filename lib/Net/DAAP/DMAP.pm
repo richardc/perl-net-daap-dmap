@@ -803,5 +803,30 @@ __DATA__
                       'ID' => 'msdc',
                       'NAME' => 'dmap.databasescount',
                       'TYPE' => 5
-                    }
+                    },
+          'ppro' => {
+                      'ID' => 'ppro',
+                      'NAME' => 'dpap.protocolversion',
+                      'TYPE' => 11
+                    },
+          'pimf' => {
+                      'ID' => 'pimf',
+                      'NAME' => 'dpap.imagefilename',
+                      'TYPE' => 9
+                    },
+          'pasp' => {
+                      'ID' => 'pasp',
+                      'NAME' => 'dpap.aspectratio',
+                      'TYPE' => 9
+                    },
+          'picd' => {
+                      'ID' => 'picd',
+                      'NAME' => 'dpap.creationdate',
+                      'TYPE' => 5
+                    },
+          'pfdt' => {
+                      'ID' => 'pfdt',
+                      'NAME' => 'dpap.picturedata',
+                      'TYPE' => 9
+                    },
         };

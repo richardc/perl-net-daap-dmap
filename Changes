@@ -2,6 +2,7 @@ HEAD
 	Pod fixes
         + t/content-codes.dump
 	carps about unknown key types
+	knows about DPAP
 
 1.20	Friday 25th June, 2004
 	Initial CPAN release
