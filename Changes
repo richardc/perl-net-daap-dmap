@@ -1,3 +1,6 @@
+1.26	Wednesday 1st September, 2004
+	Fixed the email address of the daap-dev list.
+
 1.25	Wednesday 18th August, 2004
 	Add a type 42 - non-utf-8 text (Net::DPAP::Client breaks else)
 

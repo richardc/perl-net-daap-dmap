@@ -1,7 +1,7 @@
 package Net::DAAP::DMAP;
 use strict;
 our $NOISY = 0;
-our $VERSION = '1.25';
+our $VERSION = '1.26';
 
 =pod
 
@@ -159,8 +159,8 @@ the possibility of a negative number of songs?).
 =head1 AUTHOR
 
 Nathan Torkington, <nathan AT torkington.com>.  For support, join the
-DAAP developers mailing list by sending mail to <daap-devel-subscribe
-AT develooper.com>.
+DAAP developers mailing list by sending mail to <daap-dev-subscribe AT
+develooper.com>.
 
 Richard Clamp <richardc@unixbeard.net> is the current maintainer, and
 took over in July 2004.
