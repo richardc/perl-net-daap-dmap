@@ -1,6 +1,7 @@
 Makefile.PL
 Build.PL
 META.yml
+Changes
 lib/Net/DAAP/DMAP.pm
 MANIFEST
 MANIFEST.SKIP
