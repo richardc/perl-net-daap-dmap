@@ -1,7 +1,7 @@
 package Net::DAAP::DMAP;
 use strict;
 our $NOISY = 0;
-our $VERSION = '1.23';
+our $VERSION = '1.24';
 
 =pod
 
@@ -287,8 +287,8 @@ sub dmap_unpack {
         } else {
             $data = unpack($Type_To_Unpack{$type}, $data);
         }
-        # type 7 is really utf-8 encoded, so if we can, show that it is
-        if ($type == 7 && eval { require Encode; 1 }) {
+        # type 9 is really utf-8 encoded, so if we can, show that it is
+        if ($type == 9 && eval { require Encode; 1 }) {
             $data = Encode::decode('utf-8', $data);
         }
         push @tags, [ $Types->{$tag}{NAME}, $data ];

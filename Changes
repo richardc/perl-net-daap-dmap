@@ -1,3 +1,7 @@
+1.24	Friday 30th July, 2004
+	Doh! text is type 9, not type 7
+
+
 1.23	Friday 30th July, 2004
 	Decodes text as utf-8 when Encode is available.
 
