@@ -1,6 +1,6 @@
 package Net::DAAP::DMAP;
 use strict;
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 =pod
 
@@ -28,11 +28,10 @@ Net::DAAP::DMAP - Perl module for reading and writing DAAP structures
 
 =head2 WARNING!
 
-Until 1.0, I reserve the right to change the interface.  In
+Until 2.0, I reserve the right to change the interface.  In
 particular, I think C<dmap_flatten>, C<dmap_to_hash_ref>, and
-C<dmap_to_array_ref> are likely
-to disappear.  And I suspect the hive brain of Perl can come up with a
-better data structure than I have.
+C<dmap_to_array_ref> are likely to disappear.  And I suspect the hive
+brain of Perl can come up with a better data structure than I have.
 
 =head2 Back to the Description
 
