@@ -271,7 +271,7 @@ sub dmap_unpack {
         my $data = substr($buf, 8, $len);
         my $type = $Types->{$tag}{TYPE};
         unless ($type) {
-            warn "Don't know about the type of $tag";
+            #warn "Don't know about the type of $tag";
         }
 
         if ($type == 12) {
@@ -383,12 +383,12 @@ sub dmap_pack {
         # something it doesn't know the content-code of, like aeSV
         # which is new to 4.5
         unless ($name) {
-            carp "element without a name - skipping";
+            #carp "element without a name - skipping";
             next;
         }
         # or, it may be we don't know what kind of thing this is
         unless ($by_name{ $name }) {
-            carp "we don't know the type for '$name' elements - skipping";
+            #carp "we don't know the type for '$name' elements - skipping";
             next;
         }
 
