@@ -238,6 +238,7 @@ sub dmap_unpack {
         my ($tag, $len) = unpack("a4N", $buf);
         my $data = substr($buf, 8, $len);
         my $type = $Types->{$tag}{TYPE};
+        die "Don't know about the type of $tag" unless $type;
 
         if ($type == 12) {
             $data = dmap_unpack($data);
@@ -313,7 +314,6 @@ sub dmap_seek {
     return $struct;
 }
 
-my %by_name;
 sub update_content_codes {
   my $array = shift;
   my $short;
@@ -336,14 +336,13 @@ sub update_content_codes {
   }
 
   $Types = $short;
-  %by_name = map { $_->{NAME} => $_ } values %$Types;
 }
 
-%by_name = map { $_->{NAME} => $_ } values %$Types;
 sub dmap_pack {
     my $struct = shift;
     my $out = '';
 
+    my %by_name = map { $_->{NAME} => $_ } values %$Types;
     for my $pair (@$struct) {
         my ($name, $value) = @$pair;
         # dmap_unpack doesn't populate the name when its decoded
@@ -354,7 +353,7 @@ sub dmap_pack {
             next;
         }
         # or, it may be we don't know what kind of thing this is
-        unless (exists $by_name{ $name }) {
+        unless ($by_name{ $name }) {
             carp "we don't know the type for '$name' elements - skipping";
             next;
         }
