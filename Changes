@@ -1,3 +1,7 @@
+HEAD	Tuesday 25th September, 2007
+	Render to utf-8 bytes before you pack the data.  Fixes a
+	bug that perl 5.9.5 reveals with it's saner pack "a*".
+
 1.26	Wednesday 1st September, 2004
 	Fixed the email address of the daap-dev list.
 
