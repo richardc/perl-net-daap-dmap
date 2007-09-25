@@ -407,6 +407,9 @@ sub dmap_pack {
         my $type = $by_name{ $name }{TYPE};
         #print "$name => $tag $type $Type_To_Unpack{$type}\n";
         #$SIG{__WARN__} = sub { die @_ };
+        if ($type == 9 && eval { require Encode; 1 }) {
+            $value = Encode::encode('utf-8', $value);
+        }
         if ($type == 12) { # container
             $value = dmap_pack( $value );
         }
