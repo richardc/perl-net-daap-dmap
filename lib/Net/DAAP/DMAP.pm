@@ -387,7 +387,7 @@ sub dmap_pack {
     my $struct = shift;
     my $out = '';
 
-    my %by_name = map { $_->{NAME} => $_ } values %$Types;
+    my %by_name = map { %{$_} ? ( $_->{NAME} => $_ ) : () } values %$Types;
     for my $pair (@$struct) {
         my ($name, $value) = @$pair;
         # dmap_unpack doesn't populate the name when its decoded
